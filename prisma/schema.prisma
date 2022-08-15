@@ -10,10 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model mahasiswa {
+model bayi {
   id    Int     @id @default(autoincrement())
-  email String  @unique
-  nama  String?
-  nim String?
-  kelas String?
+  namabayi String  @unique
+  umur  Int
+  namaibu String
+  tahunlahir String
 }

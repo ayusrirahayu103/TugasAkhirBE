@@ -9,72 +9,72 @@ app.use(express.json());
 
 const port = 12000;
 
-app.get("/mahasiswa", async (req, res) => {
+app.get("/bayi", async (req, res) => {
   try {
-    const mahasiswa = await database.mahasiswa.findMany();
-    if (!mahasiswa) throw new Error("Data Mahasiswa Tidak Ditemukan");
-    res.send(mahasiswa);
+    const bayi = await database.bayi.findMany();
+    if (!bayi) throw new Error("Data Bayi Tidak Terdaftar");
+    res.send(bayi);
   } catch (err) {
     res.send({ status: 404, message: err.message });
   }
 });
 
-//mengambil data mahasiswa berdasarkan id nya
-app.get("/mahasiswa/:id", async (req, res) => {
+//mengambil data bayi  berdasarkan id nya
+app.get("/bayi/:id", async (req, res) => {
   try {
-    const mahasiswa = await database.mahasiswa.findUnique({
+    const bayi = await database.bayi.findUnique({
       where: {
         id: parseInt(req.params.id),
       },
     });
-    if (!mahasiswa) throw new Error("Data Mahasiswa Tidak Ditemukan");
-    res.send(mahasiswa);
+    if (!bayi) throw new Error("Data Bayi Tidak Ditemukkan");
+    res.send(bayi);
   } catch (err) {
     res.send({ status: 404, message: err.message });
   }
 });
 
 //Untuk membuat data baru pada tabel
-app.post("/mahasiswa/create", async (req, res) => {
+app.post("/bayi/create", async (req, res) => {
   try {
-    const mahasiswa = await database.mahasiswa.create({
+    const bayi = await database.bayi.create({
       data: {
-        nama: req.body.nama,
-        email: req.body.email,
-        nim: req.body.nim,
-        kelas: req.body.kelas,
+        namabayi: req.body.namabayi,
+        umur: req.body.umur,
+        namaibu: req.body.namaibu,
+        tahunlahir: req.body.tahunlahir,
       },
     });
-    res.send({ message: "Data Mahasiswa Berhasil di Buat", data: mahasiswa });
+    res.send({ message: "Data Bayi Telah Ditambahkan ", data: bayi });
   } catch (err) {}
 });
 
 //Untuk menambahkan/perbaharui data mahasiswa
-app.put("/mahasiswa/update/", async (req, res) => {
+app.put("/bayi/update/", async (req, res) => {
   try {
-    const mahasiswa = await database.mahasiswa.update({
+    const bayi = await database.bayi.update({
       where: {
         id: req.body.id,
       },
       data: {
-        nama: req.body.nama,
-        email: req.body.email,
-        nim: req.body.nim,
-        kelas:req.body.kelas,
+        namabayi: req.body.namabayi,
+        umur: req.body.umur,
+        namaibu: req.body.namaibu,
+        tahunlahir: req.body.tahunlahir,
       },
     });
-    res.send({ message: "Mahasiswa Berhasil di update", data: mahasiswa });
+    res.send({ message: "Data Berhasil di Update", data: bayi });
   } catch (err) {}
 });
 
  //Untuk menghapus data mahasiswa
-app.delete("/mahasiswa/delete", async (req, res) => {
-  await database.mahasiswa.delete({
+app.delete("/bayi/delete", async (req, res) => {
+  await database.bayi.delete({
     where: {
       id: req.body.id,
     },
   });
-  res.send({ message: "Data Mahasiswa Berhasil Dihapus" });
+  res.send({ message: "Data Berhasil Dihapus" });
 });
 
 app.listen(port, () => {
